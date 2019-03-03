@@ -1,13 +1,36 @@
-const ipfsClient = require('ipfs-http-client');
 const fs = require('fs');
+const ipfsClient = require('ipfs-http-client');
 
-// connect to ipfs daemon API server
 const ipfs = ipfsClient('localhost', '5001', { protocol: 'http' });
-const path = '/Users/xujiaqi/myProject/zw-app/assets/ipfs-daemon.png';
-ipfs.add(fs.readFileSync(path), function (err, files) {
-  if (err || typeof files == "undefined") {
-    console.log(err);
-  } else {
-    console.log(files);
-  }
-});
+
+exports.add = buffer => {
+  return new Promise((resolve, reject) => {
+    try {
+      ipfs.add(buffer, function (err, files) {
+        if (err || typeof files === 'undefined') {
+          reject(err);
+        } else {
+          resolve(files[0].hash);
+        }
+      });
+    } catch (ex) {
+      reject(ex);
+    }
+  });
+};
+
+exports.get = hash => {
+  return new Promise((resolve, reject) => {
+    try {
+      ipfs.get(hash, function (err, files) {
+        if (err || typeof files === 'undefined') {
+          reject(err);
+        } else {
+          resolve(files[0].content);
+        }
+      });
+    } catch (ex) {
+      reject(ex);
+    }
+  });
+};
