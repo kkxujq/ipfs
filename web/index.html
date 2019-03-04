@@ -10,16 +10,17 @@
   <button class="submit" type="submit">提交</button>
   <button class="reset" type="reset">重置</button>
 </form>
+<section class="preview"></section>
 <script>
   const file = document.querySelector('#file');
 
   function previewImgFile(event, files, index) {
-    var _files = files || event.target.files;
-    var _index = index || 0;
-    var reader = new FileReader();
+    const _files = files || event.target.files;
+    let _index = index || 0;
+    const reader = new FileReader();
 
     reader.onload = function(event) {
-      var eImg = document.createElement('img');
+      const eImg = document.createElement('img');
       eImg.src = event.target.result;
       document.body.appendChild(eImg);
 
@@ -29,7 +30,7 @@
     reader.readAsDataURL(_files[_index]);
   }
 
-  //document.querySelector('#file').addEventListener('change', previewImgFile, false);
+  // document.querySelector('#file').addEventListener('change', previewImgFile, false);
 
 
   file.addEventListener('change', event => {

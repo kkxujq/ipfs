@@ -5,7 +5,6 @@ module.exports = {
   path: "/file",
 
   async handle(ctx, next) {
-    console.log(11111);
     const tmpdir = os.tmpdir();
     const filePaths = [];
     const files = ctx.request.body.files || {};
